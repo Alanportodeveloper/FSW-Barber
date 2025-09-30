@@ -7,6 +7,8 @@ import { MapPinIcon } from "lucide-react"
 import { notFound } from "next/navigation"
 import ServiceItem from "@/app/_components/service-item"
 import PhoneItem from "@/app/_components/phone-items"
+import SidebarSheet from "@/app/_components/sidebar-sheet"
+import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet"
 
 interface BarbershopPageProps {
   params: {
@@ -50,14 +52,18 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
             <ChevronLeftIcon />
           </Link>
         </Button>
-
-        <Button
-          size="icon"
-          variant="secondary"
-          className="absolute right-4 top-4"
-        >
-          <MenuIcon />
-        </Button>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              size="icon"
+              variant="outline"
+              className="absolute right-4 top-4"
+            >
+              <MenuIcon />
+            </Button>
+          </SheetTrigger>
+          <SidebarSheet />
+        </Sheet>
       </div>
 
       {/* Titutlo */}
