@@ -9,6 +9,8 @@ import Search from "./_components/search"
 import Link from "next/link"
 import { getServerSession } from "next-auth"
 import { authOptions } from "./_lib/auth"
+import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
 
 const Home = async () => {
   const session = await getServerSession(authOptions)
@@ -40,14 +42,30 @@ const Home = async () => {
       })
     : []
 
+  const formattedDate = format(new Date(), "EEEE, dd 'de' MMMM", {
+    locale: ptBR,
+  })
+
+  const capitalizeDayAndMonth = (dateString: string) => {
+    const [dayOfWeek, rest] = dateString.split(", ")
+    const [day, de, month] = rest.split(" ")
+
+    const dayOfWeekCap = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1)
+    const monthCap = month.charAt(0).toUpperCase() + month.slice(1)
+
+    return `${dayOfWeekCap}, ${day} ${de} ${monthCap}`
+  }
+
   return (
     <div>
       {/* header */}
       <Header />
       <div className="p-5">
         {/* Texto */}
-        <h2 className="text-xl font-bold">Olá, Alan</h2>
-        <p>Domingo, 21 de Setembro</p>
+        <h2 className="text-xl font-bold">
+          Olá, {session?.user ? session.user.name : "bem vindo"}!
+        </h2>
+        <p>{capitalizeDayAndMonth(formattedDate)}</p>
 
         {/* Busca */}
         <div className="mt-6">
