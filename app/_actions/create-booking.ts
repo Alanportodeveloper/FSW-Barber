@@ -10,7 +10,7 @@ interface CreateBookingProps {
   date: Date
 }
 
-export const createBookinkg = async (params: CreateBookingProps) => {
+export const createBooking = async (params: CreateBookingProps) => {
   const user = await getServerSession(authOptions)
   if (!user) {
     throw new Error("Usuário não autenticado")
